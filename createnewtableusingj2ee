@@ -1,0 +1,103 @@
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+<form action="does12" method="get">
+<h2>username</h2><input type="text" placeholder="name!!!" name="gg">
+<h2>password</h2><input type="password" placeholder="password" name="pp">
+<input type="submit" value="sign-up">
+</form>
+</body>
+</html>
+
+
+
+j2ee code
+
+package com.jdbc;
+
+import java.io.IOException;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.Statement;
+
+//import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+//import javax.servlet.http.HttpSession;
+
+/**
+ * Servlet implementation class does
+ */
+@WebServlet("/does12")
+public class does12 extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+       
+    /**
+     * @see HttpServlet#HttpServlet()
+     */
+    public does12() {
+        super();
+        // TODO Auto-generated constructor stub
+    }
+
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		//response.getWriter().append("Served at: ").append(request.getContextPath());
+		String hid=request.getParameter("gg");
+		String password=request.getParameter("pp");
+		String d="";
+		String h="";
+		int count=0;
+		int c=0;
+		try
+		{
+			if(hid.equals(d) && password.equals(h)) {
+				c=c+1;
+			}
+			else
+			{
+			Class.forName("com.mysql.jdbc.Driver");
+			Connection con1=DriverManager.getConnection("jdbc:mysql://localhost:3306/dbname", "dbusername", "dbpassword");
+			Statement ps21=con1.createStatement();
+			ResultSet rs= ps21.executeQuery("CREATE TABLE 'aahrs.'"+hid+"';");
+			while(rs.next())
+			{
+				count++;
+			}
+				if(count==1)
+				{
+					//HttpSession session=request.getSession();
+					//session.setAttribute("email",id);
+					response.sendRedirect("ph.jsp");
+					//out.println("Welcome"+nm);
+				}
+				else
+				{
+					response.sendRedirect("jse/gg.jsp");
+					//request.setAttribute("msg","invalid id or pass");
+					//RequestDispatcher rd=request.getRequestDispatcher("ph.jsp");
+					//rd.include(request, response);	
+				}
+				
+		}
+		}
+		catch(Exception e)
+		{
+		System.out.println(e);
+		}
+		
+	}
+}
